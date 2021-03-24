@@ -32,23 +32,25 @@ void A(int n,int*R,int*P,int*Q, int*X) // dane wejsciowe, X - proponowana kolejn
             if( Q[X[j]] < Q[X[j+1]] )
                 swap(X[j], X[j+1]);*/
 
-    int D[]={1,3,4,8,11,12,21,23}; // kolejnosc wg dR-eQ rosnaco
-    int E[]={1,3,4,8,11,12,21,23};
+    int D[]={1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25}; // kolejnosc wg dR-eQ rosnaco
+    int E[]={1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25};
     int len = sizeof(D) / sizeof(D[0]);
     int dreq[n], Xtmp[n]; for(int i=0;i<n;i++) Xtmp[i]=i;
     for(int x=0; x<len; x++){
         for(int y=0; y<len; y++){
-            for(int i=0; i<n; i++){
-                dreq[i] = D[x]*R[i]-E[y]*Q[i];
+            if( D[x]!=E[y] || (1==D[x] || 1==E[y]) ) {
+                for(int i=0; i<n; i++){
+                    dreq[i] = D[x]*R[i]-E[y]*Q[i];
+                }
+                for(int i=0; i<(n-1); i++)
+                    for(int j=0; j<(n-1); j++)
+                        if( dreq[Xtmp[j]] > dreq[Xtmp[j+1]] )
+                            swap(Xtmp[j], Xtmp[j+1]);
+                int cmt = cmax(n,R,P,Q,Xtmp);
+                if (cmt < cmax(n,R,P,Q,X))
+                    for(int i=0; i<n; i++) X[i] = Xtmp[i];
+                for(int i=0;i<n;i++) Xtmp[i]=i;
             }
-            for(int i=0; i<(n-1); i++)
-                for(int j=0; j<(n-1); j++)
-                    if( dreq[Xtmp[j]] > dreq[Xtmp[j+1]] )
-                        swap(Xtmp[j], Xtmp[j+1]);
-            int cmt = cmax(n,R,P,Q,Xtmp);
-            if (cmt < cmax(n,R,P,Q,X))
-                for(int i=0; i<n; i++) X[i] = Xtmp[i];
-            for(int i=0;i<n;i++) Xtmp[i]=i;
         }
     }
 
