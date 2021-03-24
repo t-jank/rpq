@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <algorithm>
 
 using namespace std;
 
@@ -73,6 +74,13 @@ void A(int n,int*R,int*P,int*Q, int*X) // dane wejsciowe, X - proponowana kolejn
         }
     }
 
+    if(0==R[0] && 0==Q[0]){
+        int sumr=0,sumq=0;
+        for(int i=0;i<n;i++){sumr=sumr+R[i]; sumq=sumq+Q[i];}
+        if(0 == sumr - *max_element(R,R+n) && 0 == sumq - Q[distance(R,find(R,R+n,*max_element(R,R+n)))]) //maksymalnie jedno zadanie z niezerowymi r i q
+            cout <<"drugiiii mam cie ";
+    }
+
 }
 
 
@@ -97,22 +105,6 @@ int main()
         cout << "\nKolejnosc:\n"; for(int i=0;i<n;i++) cout << X[i]+1 << " ";
         cout << "\nCmax: " << cmax(n,R,P,Q,X) << endl << endl;
         total = total + cmax(n,R,P,Q,X);
-
-            /*cout << "Wartosci:\n";
-            cout.width(7); cout << left << "nr";
-            cout.width(7); cout << left << "R";
-            cout.width(6); cout << left << "P";
-            cout.width(6); cout << left << "Q" << endl;
-            for(int i = 0; i < n; i++){
-                cout.width(7); cout << left;
-                cout << X[i]+1;
-                cout.width(7); cout << left;
-                cout << R[X[i]];
-                cout.width(6); cout << left;
-                cout << P[X[i]];
-                cout.width(6); cout << left;
-                cout << Q[X[i]] << endl;
-            }*/
 
     }
 
