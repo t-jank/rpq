@@ -1,0 +1,10 @@
+Tomasz Jankowiak
+
+termin oddania: 24.03.2021
+
+numer ćwiczenia: 1
+
+Suma długości uszeregowań: 13862 + 20917 + 31343 + 33878 = 100000
+
+Sugerowana ocena: 5.5
+ 
