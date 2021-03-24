@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <algorithm>
+#include <ctime>
 
 using namespace std;
 
@@ -19,7 +20,7 @@ int cmax(int n, int*R, int*P, int *Q, int *X)
 
 void A(int n,int*R,int*P,int*Q, int*X) // dane wejsciowe, X - proponowana kolejnosc
 {
-    for(int i=0;i<n;i++) X[i]=i; // przypisanie kolejnosci 1,2,3...
+    for(int i=0;i<n;i++) X[i]=i; // przypisanie kolejnosci 0,1,2,3...
 
   /*  for(int i=0; i<(n-1); i++) // kolejnosc wg R rosnaco
         for(int j=0; j<(n-1); j++)
@@ -51,6 +52,31 @@ void A(int n,int*R,int*P,int*Q, int*X) // dane wejsciowe, X - proponowana kolejn
         }
     }
 
+    if((0==R[0] && 0==Q[0]) || (0==R[1] && 0==Q[1])){
+        int sumr=0,sumq=0,sum=0,x;
+        for(int i=0;i<n;i++){sumr=sumr+R[i]; sumq=sumq+Q[i];}
+        if(0 == sumr - *max_element(R,R+n) && 0 == sumq - Q[distance(R,find(R,R+n,*max_element(R,R+n)))])  //maksymalnie jedno zadanie z niezerowymi r i q
+        {
+            swap(X[23],X[distance(X,find(X,X+n,distance(R,find(R,R+n,*max_element(R,R+n)))))]);
+            swap(X[23],X[9]);
+            int diff = 5000; // roznica od potencjalnie optymalnego rozwiazania
+            for(int j = 0; j < 100000; j++){ //1961256
+                x = rand() % 23;
+                int *temp = new int[9]; for(int i=0; i<9; i++) temp[i] = -i-1;
+                for(int i=0; i<9; i++){ // losowanie niepowtarzalnych indeksow 0-22 (losowanie 9 zadan, ktore beda przed zadaniem o niezerowym r i q)
+                    while((find(temp, temp + 9, x) != temp + 9) == true) x = rand() % 23;
+                    temp[i] = x;
+                }
+                for(int i=0; i<9; i++) sum = sum + P[temp[i]]; // policzenie sumy wylosowanych 9 elementow
+                if(abs(*max_element(R,R+n)-sum) < diff){ // jesli znaleziono lepsza kolejnosc
+                    diff = abs(*max_element(R,R+n)-sum);
+                    for(int i=0; i<9; i++) swap(X[i], X[distance(X,find(X,X+n,temp[i]))]);
+                }
+                sum = 0;
+                delete [] temp;
+            }
+        }
+    }
 
  /*   int deg = 1;
     for(int i=0; i<100000; i++){
@@ -74,13 +100,6 @@ void A(int n,int*R,int*P,int*Q, int*X) // dane wejsciowe, X - proponowana kolejn
         }
     }
 
-    if(0==R[0] && 0==Q[0]){
-        int sumr=0,sumq=0;
-        for(int i=0;i<n;i++){sumr=sumr+R[i]; sumq=sumq+Q[i];}
-        if(0 == sumr - *max_element(R,R+n) && 0 == sumq - Q[distance(R,find(R,R+n,*max_element(R,R+n)))]) //maksymalnie jedno zadanie z niezerowymi r i q
-            cout <<"drugiiii mam cie ";
-    }
-
 }
 
 
@@ -99,6 +118,7 @@ int main()
             plik >> R[i] >> P[i] >> Q[i];
         plik.close();
 
+        srand( time( NULL ) ); // konfiguracja generatora liczb losowych
         A(n,R,P,Q,X);
 
         cout << datan[d];
