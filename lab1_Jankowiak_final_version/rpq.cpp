@@ -32,7 +32,7 @@ void A(int n,int*R,int*P,int*Q, int*X) // dane wejsciowe, X - proponowana kolejn
             if( Q[X[j]] < Q[X[j+1]] )
                 swap(X[j], X[j+1]);*/
 
-    int D[]={1,3,4,8,11,12,21,23}; // kolejnosc wg dR-eQ rozsnaco
+    int D[]={1,3,4,8,11,12,21,23}; // kolejnosc wg dR-eQ rosnaco
     int E[]={1,3,4,8,11,12,21,23};
     int len = sizeof(D) / sizeof(D[0]);
     int dreq[n], Xtmp[n]; for(int i=0;i<n;i++) Xtmp[i]=i;
