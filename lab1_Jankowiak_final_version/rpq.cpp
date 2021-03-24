@@ -55,8 +55,7 @@ void A(int n,int*R,int*P,int*Q, int*X) // dane wejsciowe, X - proponowana kolejn
     if((0==R[0] && 0==Q[0]) || (0==R[1] && 0==Q[1])){
         int sumr=0,sumq=0,sum=0,x;
         for(int i=0;i<n;i++){sumr=sumr+R[i]; sumq=sumq+Q[i];}
-        if(0 == sumr - *max_element(R,R+n) && 0 == sumq - Q[distance(R,find(R,R+n,*max_element(R,R+n)))])  //maksymalnie jedno zadanie z niezerowymi r i q
-        {
+        if(0 == sumr - *max_element(R,R+n) && 0 == sumq - Q[distance(R,find(R,R+n,*max_element(R,R+n)))]){  //maksymalnie jedno zadanie z niezerowymi r i q
             swap(X[23],X[distance(X,find(X,X+n,distance(R,find(R,R+n,*max_element(R,R+n)))))]);
             swap(X[23],X[9]);
             int diff = 5000; // roznica od potencjalnie optymalnego rozwiazania
@@ -105,7 +104,7 @@ void A(int n,int*R,int*P,int*Q, int*X) // dane wejsciowe, X - proponowana kolejn
 
 int main()
 {
-
+    srand( time( NULL ) ); // konfiguracja generatora liczb losowych
     int n,R[100],P[100],Q[100],X[100],total=0;
     string datan[]={"data.1", "data.2", "data.3", "data.4"};
 
@@ -118,14 +117,12 @@ int main()
             plik >> R[i] >> P[i] >> Q[i];
         plik.close();
 
-        srand( time( NULL ) ); // konfiguracja generatora liczb losowych
         A(n,R,P,Q,X);
 
         cout << datan[d];
         cout << "\nKolejnosc:\n"; for(int i=0;i<n;i++) cout << X[i]+1 << " ";
         cout << "\nCmax: " << cmax(n,R,P,Q,X) << endl << endl;
         total = total + cmax(n,R,P,Q,X);
-
     }
 
     cout << "Suma: " << total << endl;
